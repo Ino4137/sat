@@ -42,6 +42,7 @@ showEnv k (Env n) = show . map (`rem` 2) . take k . iterate (`div` 2) $ n
 value :: Char -> Env -> Bool
 value (ord -> n) (Env env) = testBit env (n - ord 'a')
 
+-- too lazy to implement proper De Brujin indices, it all just werks
 eval :: Env -> Expr -> Bool
 eval env = cata alg
   where
@@ -68,24 +69,21 @@ variables = cata alg
   where
     alg (Atom (ord -> n)) = setBit 0 (n - ord 'a')
     alg (Not f) = f
-    alg (Or f g) = f .|. g
-    alg (And f g) = f .|. g
-    alg (Impl f g) = f .|. g
-    alg (Equiv f g) = f .|. g
+    alg (Or f g) = max f g
+    alg (And f g) = max f g
+    alg (Impl f g) = max f g
+    alg (Equiv f g) = max f g
 
 falsify :: Expr -> ([Env], Int)
-falsify exp = (,popCount n) . filter (flip ((not.).eval) exp) . fmap Env $ enumFromTo 0 n
+falsify exp = (,succ . round . logBase 2 $ fromIntegral n) . filter (flip ((not.).eval) exp) . fmap Env $ enumFromTo 0 n
   where n = variables exp 
 
-pprintEnvs :: ([Env], Int) -> IO ()
-pprintEnvs (e,n) = do
-  printVars $ chr . (+ ord 'a') <$> enumFromTo 0 (n-1)
-  foldMap (putStrLn.showEnv n) e
+pprintEnvs :: ([Env], Int) -> String
+pprintEnvs (e,n) =
+  let header = printVars $ pure . chr . (+ ord 'a') <$> enumFromTo 0 (n-1)
+  in header ++ intercalate "\n" (showEnv n <$> e)
   where
-    printVars (intersperse ',' -> e)  = do
-      putChar '['
-      putStr e
-      putStrLn "]" 
+    printVars (intercalate "," -> e) = '[' : e ++ "]\n" 
 
 -- Parsing
 

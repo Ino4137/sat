@@ -4,15 +4,14 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  f = { mkDerivation, base, containers, parsec, recursion, stdenv
-      }:
+  f = { mkDerivation, base, parsec, recursion, stdenv }:
       mkDerivation {
         pname = "sat";
         version = "0.1.0.0";
         src = ./.;
         isLibrary = true;
         isExecutable = true;
-        libraryHaskellDepends = [ base containers parsec recursion ];
+        libraryHaskellDepends = [ base parsec recursion ];
         executableHaskellDepends = [ base ];
         license = stdenv.lib.licenses.bsd3;
       };

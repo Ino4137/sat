@@ -18,7 +18,6 @@ library
   -- other-extensions:
   build-depends:       base
                      , recursion
-                     , containers
                      , parsec
   hs-source-dirs:      src
   default-language:    Haskell2010

@@ -12,17 +12,18 @@ Open `nix-shell`, then run `cabal build`.
 
 
 # Usage
-The program is designed to work in a piped manner. 
+The program is designed to work in a piped manner.
+
 Although it works interactively, it's best to treat it like this:
 `echo {formulae.file} | cabal run`, where *formulae.file* is a text file with newline-separated formulas of CPC.
 Example input:
-`
+```
 a /\ b
 a \/ (b /\ c)
 ~(a \/ b)
-` 
+```
 example output:
-`
+```
 a /\ b
 [a,b]
 [0,0]
@@ -37,4 +38,4 @@ a \/ (b /\ c)
 [a,b]
 [1,0]
 [0,1]
-`
+```

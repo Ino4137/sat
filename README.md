@@ -2,8 +2,8 @@
 A program evaluating formulae in CPC and returning set of n-tuples, for which each formula is false as the output.
 
 #Prerequisites
-* (Haskell's GHC)[https://www.haskell.org/ghc/]
-* *optional* (nix)[https://nixos.org/download.html]
+* [Haskell's GHC](https://www.haskell.org/ghc/)
+* *optional* [nix](https://nixos.org/download.html)
 
 # Compilation
 Run `cabal build`.

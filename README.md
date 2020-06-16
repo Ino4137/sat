@@ -15,7 +15,9 @@ Open `nix-shell`, then run `cabal build`.
 The program is designed to work in a piped manner.
 
 Although it works interactively, it's best to treat it like this:
-`echo {formulae.file} | cabal run`, where *formulae.file* is a text file with newline-separated formulas of CPC.
+* `cat {formulae.file} | cabal run`, where *formulae.file* is a text file with newline-separated formulas of CPC.
+* `echo f1\nf2\n...\nfn | cabal run`, granted that every formula fi is placed in the new line
+
 Example input:
 ```
 a /\ b
